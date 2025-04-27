@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>State Abbreviation Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #stateForm {
+            margin: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #555;
+        }
+
+        #result {
+            margin: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>State Abbreviation Info</h1>
+    <form id="stateForm">
+        <label for="abbreviation">Enter State Abbreviation (e.g., TX):</label>
+        <input type="text" id="abbreviation" required>
+        <input type="submit" value="Get Info">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const stateInfo = {
+            'AL': { name: 'Alabama', capital: 'Montgomery', timezone: 'America/Chicago' },
+            'AK': { name: 'Alaska', capital: 'Juneau', timezone: 'America/Anchorage' },
+            'AZ': { name: 'Arizona', capital: 'Phoenix', timezone: 'America/Phoenix' },
+            'AR': { name: 'Arkansas', capital: 'Little Rock', timezone: 'America/Chicago' },
+            'CA': { name: 'California', capital: 'Sacramento', timezone: 'America/Los_Angeles' },
+            'CO': { name: 'Colorado', capital: 'Denver', timezone: 'America/Denver' },
+            'CT': { name: 'Connecticut', capital: 'Hartford', timezone: 'America/New_York' },
+            'DE': { name: 'Delaware', capital: 'Dover', timezone: 'America/New_York' },
+            'FL': { name: 'Florida', capital: 'Tallahassee', timezone: 'America/New_York' },
+            'GA': { name: 'Georgia', capital: 'Atlanta', timezone: 'America/New_York' },
+            'HI': { name: 'Hawaii', capital: 'Honolulu', timezone: 'Pacific/Honolulu' },
+            'ID': { name: 'Idaho', capital: 'Boise', timezone: 'America/Boise' },
+            'IL': { name: 'Illinois', capital: 'Springfield', timezone: 'America/Chicago' },
+            'IN': { name: 'Indiana', capital: 'Indianapolis', timezone: 'America/Indiana/Indianapolis' },
+            'IA': { name: 'Iowa', capital: 'Des Moines', timezone: 'America/Chicago' },
+            'KS': { name: 'Kansas', capital: 'Topeka', timezone: 'America/Chicago' },
+            'KY': { name: 'Kentucky', capital: 'Frankfort', timezone: 'America/New_York' },
+            'LA': { name: 'Louisiana', capital: 'Baton Rouge', timezone: 'America/Chicago' },
+            'ME': { name: 'Maine', capital: 'Augusta', timezone: 'America/New_York' },
+            'MD': { name: 'Maryland', capital: 'Annapolis', timezone: 'America/New_York' },
+            'MA': { name: 'Massachusetts', capital: 'Boston', timezone: 'America/New_York' },
+            'MI': { name: 'Michigan', capital: 'Lansing', timezone: 'America/Detroit' },
+            'MN': { name: 'Minnesota', capital: 'St. Paul', timezone: 'America/Chicago' },
+            'MS': { name: 'Mississippi', capital: 'Jackson', timezone: 'America/Chicago' },
+            'MO': { name: 'Missouri', capital: 'Jefferson City', timezone: 'America/Chicago' },
+            'MT': { name: 'Montana', capital: 'Helena', timezone: 'America/Denver' },
+            'NE': { name: 'Nebraska', capital: 'Lincoln', timezone: 'America/Chicago' },
+            'NV': { name: 'Nevada', capital: 'Carson City', timezone: 'America/Los_Angeles' },
+            'NH': { name: 'New Hampshire', capital: 'Concord', timezone: 'America/New_York' },
+            'NJ': { name: 'New Jersey', capital: 'Trenton', timezone: 'America/New_York' },
+            'NM': { name: 'New Mexico', capital: 'Santa Fe', timezone: 'America/Denver' },
+            'NY': { name: 'New York', capital: 'Albany', timezone: 'America/New_York' },
+            'NC': { name: 'North Carolina', capital: 'Raleigh', timezone: 'America/New_York' },
+            'ND': { name: 'North Dakota', capital: 'Bismarck', timezone: 'America/Chicago' },
+            'OH': { name: 'Ohio', capital: 'Columbus', timezone: 'America/New_York' },
+            'OK': { name: 'Oklahoma', capital: 'Oklahoma City', timezone: 'America/Chicago' },
+            'OR': { name: 'Oregon', capital: 'Salem', timezone: 'America/Los_Angeles' },
+            'PA': { name: 'Pennsylvania', capital: 'Harrisburg', timezone: 'America/New_York' },
+            'RI': { name: 'Rhode Island', capital: 'Providence', timezone: 'America/New_York' },
+            'SC': { name: 'South Carolina', capital: 'Columbia', timezone: 'America/New_York' },
+            'SD': { name: 'South Dakota', capital: 'Pierre', timezone: 'America/Chicago' },
+            'TN': { name: 'Tennessee', capital: 'Nashville', timezone: 'America/Chicago' },
+            'TX': { name: 'Texas', capital: 'Austin', timezone: 'America/Chicago' },
+            'UT': { name: 'Utah', capital: 'Salt Lake City', timezone: 'America/Denver' },
+            'VT': { name: 'Vermont', capital: 'Montpelier', timezone: 'America/New_York' },
+            'VA': { name: 'Virginia', capital: 'Richmond', timezone: 'America/New_York' },
+            'WA': { name: 'Washington', capital: 'Olympia', timezone: 'America/Los_Angeles' },
+            'WV': { name: 'West Virginia', capital: 'Charleston', timezone: 'America/New_York' },
+            'WI': { name: 'Wisconsin', capital: 'Madison', timezone: 'America/Chicago' },
+            'WY': { name: 'Wyoming', capital: 'Cheyenne', timezone: 'America/Denver' }
+        };
+
+        function getTimeInState(timezone) {
+            const options = { timeZone: timezone, hour: 'numeric', minute: 'numeric', hour12: true };
+            return new Date().toLocaleString('en-US', options);
+        }
+
+        document.getElementById("stateForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            const abbreviationInput = document.getElementById("abbreviation").value.toUpperCase();
+            const resultElement = document.getElementById("result");
+
+            if (stateInfo[abbreviationInput]) {
+                const info = stateInfo[abbreviationInput];
+                const currentTime = getTimeInState(info.timezone);
+                resultElement.innerHTML = `
+                    <strong>State Name:</strong> ${info.name}<br>
+                    <strong>Capital:</strong> ${info.capital}<br>
+                    <strong>Timezone:</strong> ${info.timezone}<br>
+                    <strong>Current Time:</strong> ${currentTime}`;
+            } else {
+                resultElement.textContent = "State abbreviation not found.";
+            }
+        });
+    </script>
+</body>
+
+</html>
